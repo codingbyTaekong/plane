@@ -221,6 +221,12 @@ from .notification.base import (
 
 from .exporter.base import ExportIssuesEndpoint
 
+from .importer import (
+    GithubRepositoriesEndpoint,
+    GithubRepoInfoEndpoint,
+    GithubImporterEndpoint,
+    GithubImporterServiceEndpoint,
+)
 
 from .webhook.base import (
     WebhookEndpoint,
