@@ -104,6 +104,19 @@ services:
       args:
         DOCKER_BUILDKIT: 1
     restart: always
+    environment:
+      PORT: 3000
+      API_BASE_URL: http://api:8000
+      WEB_BASE_URL: http://web:3000
+      LIVE_BASE_URL: http://live:3000
+      LIVE_BASE_PATH: /live
+      LIVE_SERVER_SECRET_KEY: ${LIVE_SERVER_SECRET_KEY:-secret-key}
+      REDIS_HOST: plane-redis
+      REDIS_PORT: 6379
+      REDIS_URL: redis://plane-redis:6379/
+    depends_on:
+      - plane-redis
+      - api
 
   plane-db:
     container_name: plane-db
@@ -146,7 +159,7 @@ services:
     restart: always
     command: server /export --console-address ":9090"
     volumes:
-      - uploads:/export
+      - /mnt/hdd/uploads:/export
     environment:
       MINIO_ROOT_USER: ${AWS_ACCESS_KEY_ID}
       MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY}
@@ -164,6 +177,11 @@ services:
     environment:
       FILE_SIZE_LIMIT: ${FILE_SIZE_LIMIT:-5242880}
       BUCKET_NAME: ${AWS_S3_BUCKET_NAME:-uploads}
+      SITE_ADDRESS: ":80"
+      CERT_EMAIL: ${CERT_EMAIL:-}
+      CERT_ACME_CA: ${CERT_ACME_CA:-}
+      CERT_ACME_DNS: ${CERT_ACME_DNS:-}
+      TRUSTED_PROXIES: ${TRUSTED_PROXIES:-0.0.0.0/0}
     depends_on:
       - web
       - api

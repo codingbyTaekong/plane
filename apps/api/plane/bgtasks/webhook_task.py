@@ -297,6 +297,21 @@ def webhook_send_task(
             "DELETE": "delete",
         }.get(action, action)
 
+        # Get project detail if project_id exists in event_data
+        project_detail = None
+        if event_data and event_data.get("project"):
+            project_id = event_data.get("project")
+            try:
+                project = Project.objects.get(id=project_id)
+                project_detail = {
+                    "id": str(project.id),
+                    "name": project.name,
+                    "identifier": project.identifier,
+                    "logo_props": project.logo_props,
+                }
+            except Project.DoesNotExist:
+                pass
+
         payload = {
             "event": event,
             "action": action,
@@ -304,6 +319,7 @@ def webhook_send_task(
             "workspace_id": str(webhook.workspace_id),
             "data": event_data,
             "activity": activity,
+            "project_detail": project_detail,
         }
 
         # Use HMAC for generating signature

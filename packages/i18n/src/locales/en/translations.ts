@@ -1517,6 +1517,11 @@ export default {
           },
         },
       },
+      imports: {
+        heading: "Imports",
+        description: "Import your data from external services like GitHub and Jira.",
+        title: "Imports",
+      },
       webhooks: {
         heading: "Webhooks",
         description: "Automate notifications to external services when project events occur.",

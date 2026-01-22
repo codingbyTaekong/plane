@@ -56,7 +56,11 @@ class GithubRepositoriesEndpoint(BaseAPIView):
             github_client = GitHubAPIClient(access_token)
             repositories = github_client.get_user_repositories(page=page, per_page=per_page)
 
-            return Response(repositories, status=status.HTTP_200_OK)
+            # Format response for frontend
+            return Response({
+                "repositories": repositories,
+                "total_count": len(repositories) if page == 1 else 0,  # Approximate count
+            }, status=status.HTTP_200_OK)
 
         except GitHubAPIError as e:
             log_exception(e)

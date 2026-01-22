@@ -5,6 +5,7 @@ from .cycle import urlpatterns as cycle_urls
 from .estimate import urlpatterns as estimate_urls
 from .external import urlpatterns as external_urls
 from .importer import urlpatterns as importer_urls
+from .integration import urlpatterns as integration_urls
 from .intake import urlpatterns as intake_urls
 from .issue import urlpatterns as issue_urls
 from .module import urlpatterns as module_urls
@@ -27,6 +28,7 @@ urlpatterns = [
     *estimate_urls,
     *external_urls,
     *importer_urls,
+    *integration_urls,
     *intake_urls,
     *issue_urls,
     *module_urls,

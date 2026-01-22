@@ -1650,6 +1650,9 @@ export default {
           },
         },
       },
+      imports: {
+        title: "가져오기",
+      },
       webhooks: {
         title: "웹훅",
         add_webhook: "웹훅 추가",

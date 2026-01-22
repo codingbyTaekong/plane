@@ -37,6 +37,11 @@ export const coreRoutes: RouteConfigEntry[] = [
     route("workspace-invitations", "./(all)/workspace-invitations/page.tsx"),
   ]),
 
+  // GitHub Integration Callback
+  layout("./(all)/integrations/github/callback/layout.tsx", [
+    route("integrations/github/callback", "./(all)/integrations/github/callback/page.tsx"),
+  ]),
+
   // ========================================================================
   // ALL APP ROUTES
   // ========================================================================
@@ -267,6 +272,10 @@ export const coreRoutes: RouteConfigEntry[] = [
           route(
             ":workspaceSlug/settings/exports",
             "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/exports/page.tsx"
+          ),
+          route(
+            ":workspaceSlug/settings/imports",
+            "./(all)/[workspaceSlug]/(settings)/settings/(workspace)/imports/page.tsx"
           ),
           route(
             ":workspaceSlug/settings/webhooks",

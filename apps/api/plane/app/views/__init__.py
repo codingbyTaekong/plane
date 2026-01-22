@@ -228,11 +228,19 @@ from .importer import (
     GithubImporterServiceEndpoint,
 )
 
+from .integration import (
+    IntegrationViewSet,
+    WorkspaceIntegrationViewSet,
+    ImporterServiceListViewSet,
+)
+
 from .webhook.base import (
     WebhookEndpoint,
     WebhookLogsEndpoint,
     WebhookSecretRegenerateEndpoint,
 )
+
+from .webhook.github import GithubWebhookEndpoint
 
 from .error_404 import custom_404_view
 
