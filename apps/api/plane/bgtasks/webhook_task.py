@@ -297,20 +297,30 @@ def webhook_send_task(
             "DELETE": "delete",
         }.get(action, action)
 
-        # Get project detail if project_id exists in event_data
+        # Get project detail if project_id exists in event_data or event is project itself
         project_detail = None
-        if event_data and event_data.get("project"):
-            project_id = event_data.get("project")
-            try:
-                project = Project.objects.get(id=project_id)
+        if event_data:
+            if event == "project":
+                # For project events, event_data IS the project data
                 project_detail = {
-                    "id": str(project.id),
-                    "name": project.name,
-                    "identifier": project.identifier,
-                    "logo_props": project.logo_props,
+                    "id": str(event_data.get("id", "")),
+                    "name": event_data.get("name", ""),
+                    "identifier": event_data.get("identifier", ""),
+                    "logo_props": event_data.get("logo_props"),
                 }
-            except Project.DoesNotExist:
-                pass
+            elif event_data.get("project"):
+                # For other events (issue, cycle, module, etc.), get project from project_id
+                project_id = event_data.get("project")
+                try:
+                    project = Project.objects.get(id=project_id)
+                    project_detail = {
+                        "id": str(project.id),
+                        "name": project.name,
+                        "identifier": project.identifier,
+                        "logo_props": project.logo_props,
+                    }
+                except Project.DoesNotExist:
+                    pass
 
         payload = {
             "event": event,
